@@ -4,7 +4,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('julfinch-dockerhub')
+    DOCKERHUB_CREDENTIALS = credentials('dockerHub')
   }
   stages {
     stage('Build') {
@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Login') {
       steps {
-        bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        bat '$DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
       }
     }
     stage('Push') {
